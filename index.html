@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinner Wheels | Reborn</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24" width="32" height="32">
+                        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 2 L12 22 M2 12 L22 12 M5 5 L19 19 M5 19 L19 5" stroke="currentColor" stroke-width="1.5"/>
+                        <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                    </svg>
+                    <span class="logo-text">Spinner <span class="gradient-text">Wheels</span></span>
+                </div>
+            </div>
+            
+            <!-- Tab strip for multiple wheels -->
+            <div class="tabs-scroll-container">
+                <div class="tabs-container" id="tabsContainer">
+                    <!-- Tabs injected dynamically -->
+                </div>
+                <button class="btn-add-tab" id="addTabBtn" title="Add new wheel">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="header-right">
+                <!-- Grid / Solo Toggle -->
+                <button class="btn btn-secondary btn-icon-text" id="toggleGridBtn" title="Toggle Grid Mode">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Grid View</span>
+                </button>
+
+                <!-- Spin All (only shown in grid view) -->
+                <button class="btn btn-primary btn-icon-text" id="spinAllBtn" style="display: none;" title="Spin all wheels">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                    </svg>
+                    <span>Spin All</span>
+                </button>
+
+                <!-- Share Button -->
+                <button class="btn btn-secondary btn-icon-text" id="shareBtn" title="Share current wheel">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                    <span>Share</span>
+                </button>
+
+                <!-- Open/Save Dropdown -->
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-icon-text dropdown-toggle" id="saveLoadBtn">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+                        </svg>
+                        <span>Open/Save</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item" id="saveWheelBtn">Save Current Wheel</button>
+                        <button class="dropdown-item" id="openWheelsBtn">Saved Wheels Manager</button>
+                    </div>
+                </div>
+
+                <!-- Customize Button -->
+                <button class="btn btn-primary btn-icon-text" id="customizeBtn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    <span>Customize</span>
+                </button>
+
+                <!-- Theme Toggle -->
+                <button class="btn-icon-only" id="themeToggleBtn" title="Toggle theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" style="display: none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+
+                <!-- Volume Toggle -->
+                <button class="btn-icon-only" id="volumeToggleBtn" title="Mute/Unmute">
+                    <svg class="volume-high" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <svg class="volume-mute" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" style="display: none;">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <main class="app-main">
+            <!-- WHEEL DISPLAY AREA -->
+            <section class="wheel-section">
+                <div class="wheel-canvas-outer">
+                    <div class="wheel-canvas-container" id="canvasContainer">
+                        <!-- Standard Canvas for Drawing Wheel -->
+                        <canvas id="wheelCanvas"></canvas>
+                        
+                        <!-- Central glass spin button -->
+                        <button class="spin-center-btn" id="spinCenterBtn">
+                            <span class="spin-text">SPIN</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Triangle indicator overlay (pointing at 3 o'clock / Right side) -->
+                    <div class="wheel-pointer-container">
+                        <svg class="wheel-pointer" viewBox="0 0 24 24" width="48" height="48">
+                            <path d="M22 12L2 4L6 12L2 20Z" fill="url(#pointerGrad)" filter="url(#shadow)"/>
+                            <defs>
+                                <linearGradient id="pointerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#ff416c" />
+                                    <stop offset="100%" stop-color="#ff4b2b" />
+                                </linearGradient>
+                                <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+                                    <feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-opacity="0.5"/>
+                                </filter>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EDIT & SETTINGS SIDEBAR -->
+            <aside class="sidebar-section">
+                <div class="sidebar-tabs">
+                    <button class="sidebar-tab active" id="tabEntriesBtn">Entries</button>
+                    <button class="sidebar-tab" id="tabResultsBtn">Results</button>
+                </div>
+
+                <!-- Entries Panel -->
+                <div class="sidebar-panel active" id="panelEntries">
+                    <div class="entries-header">
+                        <span class="entry-count" id="entryCountText">0 entries</span>
+                        <div class="entries-quick-actions">
+                            <!-- Quick Fill Dropdown -->
+                            <div class="dropdown" id="quickFillDropdown">
+                                <button class="btn btn-xs btn-secondary dropdown-toggle" id="quickFillBtn" style="padding: 2px 6px;">Populate</button>
+                                <div class="dropdown-menu" style="right: auto; left: 0;">
+                                    <button class="dropdown-item" id="fillAlphaBtn">Alphabet A-Z</button>
+                                    <button class="dropdown-item" id="fillNum10Btn">Numbers 1-10</button>
+                                    <button class="dropdown-item" id="fillNum100Btn">Numbers 1-100</button>
+                                    <button class="dropdown-item" id="fillDaysBtn">Days of the Week</button>
+                                    <button class="dropdown-item" id="fillClearBtn">Clear All</button>
+                                </div>
+                            </div>
+                            <button class="btn btn-xs" id="shuffleEntriesBtn" title="Shuffle names">Shuffle</button>
+                            <button class="btn btn-xs" id="sortEntriesBtn" title="Sort alphabetically">Sort</button>
+                        </div>
+                    </div>
+                    <div class="textarea-wrapper">
+                        <textarea id="entriesTextarea" placeholder="Enter names here, one per line...&#10;Or use format: Name *3 to weight it!"></textarea>
+                    </div>
+                    <div class="entries-footer">
+                        <button class="btn btn-secondary btn-sm" id="addImageEntryBtn">
+                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                            <span>Add Image</span>
+                        </button>
+                        <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
+                        
+                        <button class="btn btn-secondary btn-sm" id="teamGeneratorBtn" title="Generate Teams">
+                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <span>Teams</span>
+                        </button>
+
+                        <button class="btn btn-danger btn-sm btn-icon-only" id="clearEntriesBtn" title="Clear all entries">
+                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="sidebar-panel" id="panelResults">
+                    <div class="results-header">
+                        <span>Winners History</span>
+                        <button class="btn btn-xs btn-danger" id="clearResultsBtn">Clear History</button>
+                    </div>
+                    <div class="results-list" id="resultsList">
+                        <!-- Result items will be dynamically added here -->
+                        <div class="empty-state">No winners yet. Spin the wheel!</div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- MODAL: CUSTOMIZE -->
+    <div class="modal-backdrop" id="customizeModal">
+        <div class="modal-card customize-modal-card">
+            <div class="modal-header">
+                <h3>Wheel Customization</h3>
+                <button class="modal-close-btn" id="closeCustomizeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body customize-tabs-layout">
+                <!-- Left Nav Tabs -->
+                <div class="customize-nav-tabs">
+                    <button class="nav-tab active" data-target="cTabSpin">During Spin</button>
+                    <button class="nav-tab" data-target="cTabAfter">After Spin</button>
+                    <button class="nav-tab" data-target="cTabColors">Colors</button>
+                    <button class="nav-tab" data-target="cTabCenter">Center Logo</button>
+                </div>
+
+                <!-- Right Contents -->
+                <div class="customize-tab-content">
+                    <!-- During Spin Tab -->
+                    <div class="tab-panel active" id="cTabSpin">
+                        <div class="form-group">
+                            <label for="spinSoundSelect">Spin Sound Effect</label>
+                            <select id="spinSoundSelect" class="form-control">
+                                <option value="plastic">Plastic Clicker</option>
+                                <option value="woodblock">Woodblock tick</option>
+                                <option value="electronic">Electronic chirp</option>
+                                <option value="none">Silence (No Tick)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="spinDurationRange">Spin Duration (seconds): <span id="spinDurationVal">10</span>s</label>
+                            <input type="range" id="spinDurationRange" min="2" max="30" value="10" class="range-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="maxNamesRange">Max names visible on wheel: <span id="maxNamesVal">100</span></label>
+                            <input type="range" id="maxNamesRange" min="10" max="500" step="10" value="100" class="range-control">
+                        </div>
+                    </div>
+
+                    <!-- After Spin Tab -->
+                    <div class="tab-panel" id="cTabAfter">
+                        <div class="form-group">
+                            <label for="winnerSoundSelect">Celebration Sound</label>
+                            <select id="winnerSoundSelect" class="form-control">
+                                <option value="applause">Applause & Cheers</option>
+                                <option value="tada">Tada Chime</option>
+                                <option value="fanfare">Brass Fanfare</option>
+                                <option value="gong">Resonant Gong</option>
+                                <option value="none">No Sound</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="autoRemoveWinnerCheckbox">
+                                <span class="checkmark"></span>
+                                Auto-remove winner from list after spin
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="showConfettiCheckbox" checked>
+                                <span class="checkmark"></span>
+                                Show confetti splash
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="winnerMessageInput">Winner Message Popup Template</label>
+                            <input type="text" id="winnerMessageInput" class="form-control" value="We have a winner!">
+                            <small class="helper-text">You can add your custom message here.</small>
+                        </div>
+                    </div>
+
+                    <!-- Colors Tab -->
+                    <div class="tab-panel" id="cTabColors">
+                        <div class="form-group">
+                            <label for="presetPaletteSelect">Choose Theme Preset</label>
+                            <select id="presetPaletteSelect" class="form-control">
+                                <option value="rainbow">Classic Rainbow</option>
+                                <option value="pastel">Pastel Dreams</option>
+                                <option value="neon">Neon Lights</option>
+                                <option value="sunset">Sunset Glow</option>
+                                <option value="ocean">Ocean Depths</option>
+                                <option value="monochrome">Sleek Monochrome</option>
+                                <option value="custom">Custom Color Palette...</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="customColorPaletteGroup" style="display: none;">
+                            <label>Palette Colors (Click to edit, drag or remove)</label>
+                            <div class="color-pickers-list" id="colorPickersList">
+                                <!-- Dynamic pickers -->
+                            </div>
+                            <button class="btn btn-secondary btn-xs mt-2" id="addColorBtn">+ Add Color</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="wheelBgColor">Page Background Color</label>
+                            <input type="color" id="wheelBgColor" class="color-picker-control" value="#12131a">
+                        </div>
+                    </div>
+
+                    <!-- Center Logo Tab -->
+                    <div class="tab-panel" id="cTabCenter">
+                        <div class="form-group">
+                            <label for="centerTypeSelect">Center Hub Type</label>
+                            <select id="centerTypeSelect" class="form-control">
+                                <option value="text">Text (SPIN)</option>
+                                <option value="emoji">Emoji Icon</option>
+                                <option value="image">Custom Upload Image</option>
+                                <option value="none">Empty Hub</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="centerEmojiGroup" style="display: none;">
+                            <label for="centerEmojiInput">Center Emoji</label>
+                            <input type="text" id="centerEmojiInput" class="form-control" value="🎉" maxlength="2">
+                        </div>
+                        <div class="form-group" id="centerImageGroup" style="display: none;">
+                            <label for="centerImageInput">Upload Hub Image</label>
+                            <input type="file" id="centerImageInput" accept="image/*" class="form-control">
+                            <div class="hub-image-preview-container" id="hubImagePreviewContainer">
+                                <!-- Preview thumbnail will show here -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rotateCenterLogoCheckbox" checked>
+                                <span class="checkmark"></span>
+                                Rotate center hub with the wheel
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelCustomizeBtn">Cancel</button>
+                <button class="btn btn-primary" id="applyCustomizeBtn">Apply Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: WINNER POPUP -->
+    <div class="modal-backdrop winner-backdrop" id="winnerModal">
+        <div class="modal-card winner-modal-card">
+            <div class="winner-header-glow"></div>
+            <div class="modal-body winner-body">
+                <div class="winner-badge">WINNER</div>
+                <h4 class="winner-message-text" id="winnerMessageText">We have a winner!</h4>
+                <div class="winner-name-display" id="winnerNameDisplay">John Doe</div>
+                
+                <div class="winner-actions mt-4" style="width: 100%;">
+                    <button class="btn btn-primary btn-lg" id="nextWheelWinnerBtn" style="width: 100%; justify-content: center;">
+                        <span>Next Wheel</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" style="margin-left: 8px;">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: SHARE LINK -->
+    <div class="modal-backdrop" id="shareModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Share Your Wheel</h3>
+                <button class="modal-close-btn" id="closeShareModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Anyone with this link can open and spin your customized wheel.</p>
+                <div class="copy-link-wrapper mt-3">
+                    <input type="text" id="shareUrlInput" class="form-control" readonly>
+                    <button class="btn btn-primary" id="copyShareUrlBtn">Copy Link</button>
+                </div>
+                <div class="share-success-msg" id="shareSuccessMsg" style="display: none;">
+                    Link copied to clipboard!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: SAVED WHEELS MANAGER -->
+    <div class="modal-backdrop" id="savedWheelsModal">
+        <div class="modal-card saved-modal-card">
+            <div class="modal-header">
+                <h3>Saved Wheels</h3>
+                <button class="modal-close-btn" id="closeSavedWheelsBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="saved-wheels-list" id="savedWheelsList">
+                    <!-- Loaded dynamically -->
+                    <div class="empty-state">No saved wheels yet. Use "Save Current Wheel" from the menu.</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeSavedWheelsBtn2">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: TEAM GENERATOR -->
+    <div class="modal-backdrop" id="teamModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Team Generator</h3>
+                <button class="modal-close-btn" id="closeTeamModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Divide your entries randomly into teams or groups.</p>
+                <div class="form-group mt-3">
+                    <label for="teamCountInput">Number of Teams / Groups</label>
+                    <input type="number" id="teamCountInput" class="form-control" value="2" min="2" max="50">
+                </div>
+                <button class="btn btn-primary w-100 mt-2" id="generateTeamsSubmitBtn" style="width: 100%;">Generate Teams</button>
+                
+                <div class="team-results-container mt-4" id="teamResultsContainer" style="display: none; border-top: 1px solid var(--border-color); padding-top: 16px;">
+                    <h4 class="mt-2" style="font-weight: 700;">Generated Groups</h4>
+                    <div class="teams-list" id="teamsList" style="margin-top: 12px; display: flex; flex-direction: column; gap: 12px; max-height: 250px; overflow-y: auto; padding-right: 4px;">
+                        <!-- Groups injected here -->
+                    </div>
+                    <button class="btn btn-secondary btn-sm mt-3" id="copyTeamsBtn" style="width: 100%;">Copy Teams to Clipboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JS Application script (module entry point) -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
